@@ -49,7 +49,7 @@ app.get('/screenshot', async (req, res) => {
     res.send(screenshot);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Ocorreu um erro ao capturar o screenshot.' });
+    res.status(500).json({ error: error });
   }
 });
 
