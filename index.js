@@ -44,9 +44,9 @@ app.get('/screenshot', async (req, res) => {
 
     const page = await browser.newPage();
         
-    await page.setDefaultNavigationTimeout(0)
+ 
     
-    await page.goto(url);
+    await page.goto(url,{waitUntil: 'load', timeout: 0});
 
     throw new error("error")
     
