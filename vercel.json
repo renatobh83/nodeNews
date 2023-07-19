@@ -6,9 +6,5 @@
   "routes": [
     { "src": "/screenshot", "dest": "index.js"
     }
-  ],
-  "functions": {
-        "/screenshot": {
-      "maxDuration": 30
-    }}
+  ]
 }
