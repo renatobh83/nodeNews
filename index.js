@@ -45,10 +45,13 @@ app.get('/screenshot', async (req, res) => {
     const page = await browser.newPage();
         
     await page.setDefaultNavigationTimeout(0)
-    await page.goto(url);
-    const screenshot = await page.screenshot({ fullPage: true });
-    measureResponseTime(screenshot);
+    
+    
+    measureResponseTime(page.goto(url));
     throw new error("error")
+    
+    const screenshot = await page.screenshot({ fullPage: true });
+    
     await browser.close();
     res.setHeader('Content-Type', 'image/png');
     res.send(screenshot);
