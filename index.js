@@ -24,9 +24,10 @@ app.get('/screenshot', async (req, res) => {
     page.setDefaultNavigationTimeout(0)
     await page.goto(url);
     const screenshot = await page.screenshot({ fullPage: true });
-    await browser.close();
     res.setHeader('Content-Type', 'image/png');
     res.send(screenshot);
+    await browser.close();
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Ocorreu um erro ao capturar o screenshot.' });
