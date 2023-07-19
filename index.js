@@ -46,7 +46,7 @@ app.get('/screenshot', async (req, res) => {
         
  
     
-    await page.goto(url,{waitUntil: 'load', timeout: 0}).then(() => {
+    await page.goto(url).then(() => {
     console.log('success')
       throw new error("error")
 }).catch((res) => {
