@@ -21,6 +21,7 @@ app.get('/screenshot', async (req, res) => {
       ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
+    page.setDefaultNavigationTimeout(0)
     await page.goto(url);
     const screenshot = await page.screenshot({ fullPage: true });
     await browser.close();
