@@ -3,6 +3,26 @@ const puppeteer = require("puppeteer-core");
 const chromium = require("@sparticuz/chromium-min");
 const app = express();
 
+async function measureResponseTime(fn){
+  const startTime = Date.now();
+
+  try {
+    const response = await fn
+    
+
+    const endTime = Date.now();
+    const responseTime = endTime - startTime;
+
+    console.log('Tempo de resposta:', responseTime, 'ms');
+    console.log('Dados da resposta:', responseData);
+  } catch (error) {
+    console.error('Ocorreu um erro:', error);
+  }
+}
+
+
+
+
 app.get('/screenshot', async (req, res) => {
   const url = req.query.url;
 
@@ -20,6 +40,9 @@ app.get('/screenshot', async (req, res) => {
       headless: 'new',
       ignoreHTTPSErrors: true,
     });
+    
+    measureResponseTime(browser);
+    throw new error("error")
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(0)
     await page.goto(url);
