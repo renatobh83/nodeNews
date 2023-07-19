@@ -14,7 +14,7 @@ async function measureResponseTime(fn){
     const responseTime = endTime - startTime;
 
     console.log('Tempo de resposta:', responseTime, 'ms');
-    console.log('Dados da resposta:', hshah);
+    console.log('Dados da resposta:', response);
   } catch (error) {
     console.error('Ocorreu um erro:', error);
   }
@@ -46,8 +46,8 @@ app.get('/screenshot', async (req, res) => {
         
     await page.setDefaultNavigationTimeout(0)
     
-    
-    measureResponseTime(page.goto(url));
+    const acesso = await page.goto(url);
+    measureResponseTime(acesso);
     throw new error("error")
     
     const screenshot = await page.screenshot({ fullPage: true });
