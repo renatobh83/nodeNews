@@ -6,7 +6,7 @@
   "routes": [
     { "src": "/screenshot", "dest": "index.js" ,
        "headers": {
-        "x-vercel-idle-timeout": 180 // Tempo limite em segundos
+        "x-vercel-idle-timeout": 180
       }
     }
   ]
