@@ -41,9 +41,10 @@ app.get('/screenshot', async (req, res) => {
       ignoreHTTPSErrors: true,
     });
     
-    measureResponseTime(browser);
-    throw new error("error")
+
     const page = await browser.newPage();
+        measureResponseTime(page);
+    throw new error("error")
     await page.setDefaultNavigationTimeout(0)
     await page.goto(url);
     const screenshot = await page.screenshot({ fullPage: true });
