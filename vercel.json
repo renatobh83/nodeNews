@@ -4,6 +4,10 @@
     { "src": "index.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/screenshot", "dest": "index.js" }
+    { "src": "/screenshot", "dest": "index.js" ,
+       "headers": {
+        "x-vercel-idle-timeout": 180 // Tempo limite em segundos
+      }
+    }
   ]
 }
