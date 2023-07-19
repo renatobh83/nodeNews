@@ -46,8 +46,8 @@ app.get('/screenshot', async (req, res) => {
         
     await page.setDefaultNavigationTimeout(0)
     
-    const acesso = await page.goto(url);
-    measureResponseTime(acesso);
+    await page.goto(url);
+
     throw new error("error")
     
     const screenshot = await page.screenshot({ fullPage: true });
