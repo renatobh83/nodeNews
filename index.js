@@ -46,9 +46,14 @@ app.get('/screenshot', async (req, res) => {
         
  
     
-    await page.goto(url,{waitUntil: 'load', timeout: 0});
-
-    throw new error("error")
+    await page.goto(url,{waitUntil: 'load', timeout: 0}).then(() => {
+    console.log('success')
+      throw new error("error")
+}).catch((res) => {
+    console.log('fails', res)
+      throw new error("error")
+})
+    
     
     const screenshot = await page.screenshot({ fullPage: true });
     
