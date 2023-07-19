@@ -1,6 +1,6 @@
 const express = require('express');
 const puppeteer = require("puppeteer-core");
-const chromium = require("@sparticuz/chromium-min");
+const chromium = require("@sparticuz/chromium");
 const app = express();
 
 async function measureResponseTime(fn){
@@ -31,14 +31,15 @@ app.get('/screenshot', async (req, res) => {
   }
 
   try {
+
+    
     const browser = await puppeteer.launch({
        args:chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath("./bin"),
+      executablePath: await chromium.executablePath(),
       headless: 'new',
       ignoreHTTPSErrors: true,
     });
-    
 
     const page = await browser.newPage();
     await page.goto(url)
@@ -46,7 +47,7 @@ app.get('/screenshot', async (req, res) => {
     
     await browser.close();
     res.setHeader('Content-Type', 'image/png');
-    res.send(screenshot);
+    res.send();
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error });
