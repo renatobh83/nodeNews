@@ -34,27 +34,14 @@ app.get('/screenshot', async (req, res) => {
     const browser = await puppeteer.launch({
        args:chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(
-        "https://github.com/Sparticuz/chromium/releases/download/v114.0.0/chromium-v114.0.0-pack.tar"
-      ),
+      executablePath: await chromium.executablePath("./bin"),
       headless: 'new',
       ignoreHTTPSErrors: true,
     });
     
 
     const page = await browser.newPage();
-        
- 
-    
-    await page.goto(url).then(() => {
-    console.log('success')
-      throw new error("error")
-}).catch((res) => {
-    console.log('fails', res)
-      throw new error("error")
-})
-    
-    
+    await page.goto(url)
     const screenshot = await page.screenshot({ fullPage: true });
     
     await browser.close();
