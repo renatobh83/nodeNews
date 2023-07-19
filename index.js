@@ -14,7 +14,7 @@ async function measureResponseTime(fn){
     const responseTime = endTime - startTime;
 
     console.log('Tempo de resposta:', responseTime, 'ms');
-    console.log('Dados da resposta:', responsesata);
+    console.log('Dados da resposta:', hshah);
   } catch (error) {
     console.error('Ocorreu um erro:', error);
   }
