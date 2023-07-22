@@ -1,6 +1,6 @@
 const express = require('express');
 const puppeteer = require("puppeteer-core");
-const chromium = require("@sparticuz/chromium");
+const chromium = require("@sparticuz/chromium-min");
 const app = express();
 
 async function measureResponseTime(fn){
@@ -36,7 +36,9 @@ app.get('/screenshot', async (req, res) => {
     const browser = await puppeteer.launch({
        args:chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
+      executablePath: await chromium.executablePath(
+         "https://github.com/Sparticuz/chromium/releases/download/v114.0.0/chromium-v114.0.0-pack.tar"
+      ),
       ignoreHTTPSErrors: true,
     });
 
