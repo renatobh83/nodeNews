@@ -53,12 +53,15 @@ app.get('/screenshot', async (req, res) => {
       await page.setRequestInterception(true);
 
     page.on('request', (request) => {
-
-      if(request.url().startsWith(url)) {
-        request.continue()
-      } else {
-        request.abort() 
-      }
+if (request.resourceType() === 'script')
+         request.abort();
+      else
+         request.continue();
+      // if(request.url().startsWith(url)) {
+      //   request.continue()
+      // } else {
+      //   request.abort() 
+      // }
     }); 
     await page.goto(url, { waitUntil: 'networkidle2' });
     const screenshot = await page.screenshot({ fullPage: true });
