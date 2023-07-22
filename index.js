@@ -25,16 +25,16 @@ const noticiasNumero = (news ,number= 8) => {
   return  news.slice(0,number)
 }
 
-app.get('/screenshot', async (req, res) => {
-  const url = req.query.url;
+app.get('/news', async (req, res) => {
+  // const url = req.query.url;
   let noticias= []
   const urls = ['https://valor.globo.com/ultimas-noticias/',
               'https://www1.folha.uol.com.br/ultimas-noticias/',
               'https://www.estadao.com.br/ultimas/'];
 
-  if (!url) {
-    return res.status(400).json({ error: 'URL não fornecida.' });
-  }
+  // if (!url) {
+  //   return res.status(400).json({ error: 'URL não fornecida.' });
+  // }
     const browser = await puppeteer.launch({
        args:[ "--disable-setuid-sandbox",
       "--no-sandbox",
