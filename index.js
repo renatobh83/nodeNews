@@ -34,6 +34,20 @@ app.get('/screenshot', async (req, res) => {
               'https://www1.folha.uol.com.br/ultimas-noticias/',
               'https://www.estadao.com.br/ultimas/'];
   try {
+
+        const browser = await puppeteer.launch({
+       args:[ "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote", '--window-size=1920,1080',
+      ],
+      executablePath: await chromium.executablePath(
+         "https://github.com/Sparticuz/chromium/releases/download/v114.0.0/chromium-v114.0.0-pack.tar"
+      ),
+      ignoreHTTPSErrors: true,
+    });
+
+    
  for (let i = 0; i< urls.length; i ++) 
       {
    
