@@ -63,6 +63,7 @@ app.get('/news', async (req, res) => {
        request.continue();
    })
     await page.goto(url, { waitUntil: 'networkidle2' });
+    await page.waitForTimeout(100);
     if(url.includes('estadao')) { 
       const noticiaJornal = await page.evaluate( () =>{
       const nodeList = document.getElementsByClassName('headline')
