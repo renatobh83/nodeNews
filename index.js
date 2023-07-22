@@ -66,7 +66,7 @@ app.get('/news', async (req, res) => {
     if(url.includes('estadao')) { 
       const noticiaJornal = await page.evaluate( () =>{
       const nodeList = document.getElementsByClassName('headline')
-      const estadaoNews = [...nodeList]
+      const estadaoNews = [...nodeList].slice(8, 12)
       const list = estadaoNews.map(({textContent}) => ({jornal: 'Estadao', noticia: textContent}))
       return list  
     })
@@ -76,7 +76,7 @@ app.get('/news', async (req, res) => {
     if(url.includes('folha'))   {
       const noticiaJornal = await page.evaluate(() => {
           const nodeList = document.getElementsByClassName("c-headline__title")
-          const folhaNews = [...nodeList]
+          const folhaNews = [...nodeList].slice(0,4)
           const list = folhaNews.map(({
             textContent
           }) => ({jornal: "Folha de SP", noticia: textContent}))
@@ -87,7 +87,7 @@ app.get('/news', async (req, res) => {
     if(url.includes('valor'))   {
       const noticiaJornal = await page.evaluate(()=>{
         const nodeList = document.getElementsByClassName('feed-post-link gui-color-primary')
-        const valorNews = [...nodeList]
+        const valorNews = [...nodeList].slice(0,4)
         const list =  valorNews.map(({textContent}) => ({jornal: 'Valor', noticia: textContent}))
       return list 
     })
