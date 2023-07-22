@@ -37,7 +37,7 @@ app.get('/screenshot', async (req, res) => {
        args:[ "--disable-setuid-sandbox",
       "--no-sandbox",
       "--single-process",
-      "--no-zygote",
+      "--no-zygote", '--window-size=1920,1080',
       ],
       executablePath: await chromium.executablePath(
          "https://github.com/Sparticuz/chromium/releases/download/v114.0.0/chromium-v114.0.0-pack.tar"
