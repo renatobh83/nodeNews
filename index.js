@@ -37,7 +37,6 @@ app.get('/screenshot', async (req, res) => {
        args:chromium.args,
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath(),
-      headless: 'new',
       ignoreHTTPSErrors: true,
     });
 
