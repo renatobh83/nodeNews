@@ -46,7 +46,17 @@ app.get('/screenshot', async (req, res) => {
     });
 
     const page = await browser.newPage();
-    await page.goto(url)
+      await page.setRequestInterception(true);
+
+    page.on('request', (request) => {
+
+      if(request.url().startsWith(url[i])) {
+        request.continue()
+      } else {
+        request.abort() 
+      }
+    }); 
+    await page.goto(url[i], { waitUntil: 'networkidle2' });
     const screenshot = await page.screenshot({ fullPage: true });
     
     await browser.close();
