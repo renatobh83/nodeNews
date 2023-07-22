@@ -50,13 +50,13 @@ app.get('/screenshot', async (req, res) => {
 
     page.on('request', (request) => {
 
-      if(request.url().startsWith(url[i])) {
+      if(request.url().startsWith(url)) {
         request.continue()
       } else {
         request.abort() 
       }
     }); 
-    await page.goto(url[i], { waitUntil: 'networkidle2' });
+    await page.goto(url, { waitUntil: 'networkidle2' });
     const screenshot = await page.screenshot({ fullPage: true });
     
     await browser.close();
