@@ -61,7 +61,7 @@ app.get('/screenshot', async (req, res) => {
     
     await browser.close();
     res.setHeader('Content-Type', 'image/png');
-    res.send();
+    res.send(screenshot);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Erro na aplicacao" });
