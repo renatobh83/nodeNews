@@ -67,7 +67,7 @@ app.get('/news', async (req, res) => {
     if(url.includes('estadao')) { 
       const noticiaJornal = await page.evaluate( () =>{
       const nodeList = document.getElementsByClassName('headline')
-      const estadaoNews = [...nodeList].slice(8, 12)
+      const estadaoNews = [...nodeList].slice(0, 4)
       const list = estadaoNews.map(({textContent}) => ({jornal: 'Estadao', noticia: textContent}))
       return list  
     })
@@ -77,7 +77,7 @@ app.get('/news', async (req, res) => {
     if(url.includes('folha'))   {
       const noticiaJornal = await page.evaluate(() => {
           const nodeList = document.getElementsByClassName("c-headline__title")
-          const folhaNews = [...nodeList].slice(0,4)
+          const folhaNews = [...nodeList].slice(8,12)
           const list = folhaNews.map(({
             textContent
           }) => ({jornal: "Folha de SP", noticia: textContent}))
