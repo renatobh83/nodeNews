@@ -22,7 +22,7 @@ const noticiasNumero = (news ,number= 8) => {
 }
 app.get('/', async (req, res) => {
     res.send("Server On")
-}
+})
         
 app.get('/news', async (req, res) => {
   // const url = req.query.url;
