@@ -5,14 +5,10 @@ const app = express();
 
 async function measureResponseTime(fn){
   const startTime = Date.now();
-
   try {
     const response = await fn
-    
-
     const endTime = Date.now();
     const responseTime = endTime - startTime;
-
     console.log('Tempo de resposta:', responseTime, 'ms');
     console.log('Dados da resposta:', response);
   } catch (error) {
@@ -24,7 +20,10 @@ async function measureResponseTime(fn){
 const noticiasNumero = (news ,number= 8) => {
   return  news.slice(0,number)
 }
-
+app.get('/', async (req, res) => {
+    res.send("Server On")
+}
+        
 app.get('/news', async (req, res) => {
   // const url = req.query.url;
   let noticias= []
@@ -46,44 +45,44 @@ app.get('/news', async (req, res) => {
       ),
       ignoreHTTPSErrors: true,
     });
- 
    try {
-
     for (let i = 0; i< urls.length; i ++) 
-      {
+      {  
+        let url = urls[i]
+        const page = await browser.newPage();
    
-    let url = urls[i]
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-
-     page.on('request', request => {
-      if (request.resourceType() === 'script') 
-       request.abort();
-     else
-       request.continue();
-   })
-    await page.goto(url, { waitUntil: 'networkidle2' });
-    await page.waitForTimeout(100);
-    if(url.includes('estadao')) { 
-      const noticiaJornal = await page.evaluate( () =>{
-      const nodeList = document.getElementsByClassName('headline')
-      const estadaoNews = [...nodeList].slice(0, 4)
-      const list = estadaoNews.map(({textContent}) => ({jornal: 'Estadao', noticia: textContent}))
-      return list  
-    })
-      noticias = noticias.concat(noticiasNumero(noticiaJornal,4))
-
+        await page.setRequestInterception(true);
+        page.on('request', request => {
+        if (request.resourceType() === 'script') 
+           request.abort();
+        else
+           request.continue();
+         })
+  
+        await page.goto(url, { waitUntil: 'networkidle2' });
+  
+        await page.waitForTimeout(100);
+  
+        if(url.includes('estadao')) { 
+     
+        const noticiaJornal = await page.evaluate( () =>{
+          const nodeList = document.getElementsByClassName('headline')
+          const estadaoNews = [...nodeList].slice(0, 4)
+          const list = estadaoNews.map(({textContent}) => ({jornal: 'Estadao', noticia: textContent}))
+          return list  
+          })
+      noticias = noticias.concat(noticiaJornal)
     }
     if(url.includes('folha'))   {
       const noticiaJornal = await page.evaluate(() => {
           const nodeList = document.getElementsByClassName("c-headline__title")
-          const folhaNews = [...nodeList].slice(8,12)
+          const folhaNews = [...nodeList].slice(0,4)
           const list = folhaNews.map(({
             textContent
           }) => ({jornal: "Folha de SP", noticia: textContent}))
           return list
         })
-       noticias = noticias.concat(noticiasNumero(noticiaJornal,4))
+       noticias = noticias.concat(noticiaJornal)
     }
     if(url.includes('valor'))   {
       const noticiaJornal = await page.evaluate(()=>{
@@ -92,7 +91,7 @@ app.get('/news', async (req, res) => {
         const list =  valorNews.map(({textContent}) => ({jornal: 'Valor', noticia: textContent}))
       return list 
     })
-       noticias = noticias.concat(noticiasNumero(noticiaJornal,4))
+       noticias = noticias.concat(noticiaJornal)
     }
       }
 
@@ -107,7 +106,6 @@ app.get('/news', async (req, res) => {
   } else {
     res.send(noticias);
   }
-
   } catch (e) {
     res.send(`Something went wrong while running Puppeteer: ${e}`);
   } finally {
@@ -115,6 +113,6 @@ app.get('/news', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log('Servidor iniciado. Acesse http://localhost:3000');
 });
