@@ -1,8 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const puppeteer = require("puppeteer-core");
 const chromium = require("@sparticuz/chromium-min");
 const app = express();
-
+app.use(cors({
+    origin: '*'
+}));
 async function measureResponseTime(fn){
   const startTime = Date.now();
   try {
